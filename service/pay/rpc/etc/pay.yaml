@@ -1,0 +1,33 @@
+Name: pay.rpc
+ListenOn: 0.0.0.0:9003
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: pay.rpc
+Mysql:
+  DataSource: root:as1028@tcp(127.0.0.1:3306)/snai_mall?charset=utf8mb4&parseTime=true&loc=Local
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass: as1028
+    Type: node
+UserRpc:
+  App: payrpc                          # App 标识
+  Token: lY6ZnmReEUwtHKFxGK8cp2aFxKNMEA2K  # Token 值，设置redis hash值：HSET rpc:auth:user payrpc lY6ZnmReEUwtHKFxGK8cp2aFxKNMEA2K
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: user.rpc
+OrderRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: order.rpc
+DevServer:
+    Enabled: true
+    Port: 7093
+    MetricsPath: /metrics
+Telemetry:
+  Name: pay.rpc
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

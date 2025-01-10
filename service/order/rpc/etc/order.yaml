@@ -1,0 +1,33 @@
+Name: order.rpc
+ListenOn: 0.0.0.0:9002
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: order.rpc
+Mysql:
+  DataSource: root:as1028@tcp(127.0.0.1:3306)/snai_mall?charset=utf8mb4&parseTime=true&loc=Local
+CacheRedis:
+  - Host: 127.0.0.1:6379
+    Pass: as1028
+    Type: node
+UserRpc:
+  App: orderrpc                          # App 标识
+  Token: gA70e5IbglpIPljTFZFnz6G8sGTWp3RQ  # Token 值，设置redis hash值：HSET rpc:auth:user orderrpc gA70e5IbglpIPljTFZFnz6G8sGTWp3RQ
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: user.rpc
+ProductRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: product.rpc
+DevServer:
+    Enabled: true
+    Port: 7092
+    MetricsPath: /metrics
+Telemetry:
+  Name: order.rpc
+  Endpoint: http://127.0.0.1:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

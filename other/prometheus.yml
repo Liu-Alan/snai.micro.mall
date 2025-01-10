@@ -1,0 +1,88 @@
+# my global config
+global:
+  scrape_interval: 15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+  evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+  # scrape_timeout is set to the global default (10s).
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: "prometheus"
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+
+    static_configs:
+      - targets: ["localhost:9090"]
+  
+  # book 配置  
+  - job_name: 'go-zero-book'
+    file_sd_configs:
+    - files:
+      - targets.json
+  
+  # mall配置
+  - job_name: 'go-zero-mall'
+    static_configs:
+      # 目标的采集地址
+      - targets: ['127.0.0.1:7080']
+        labels:
+          # 自定义标签
+          app: 'user-api'
+          env: 'test'
+          instance: "127.0.0.1:8000"
+
+      - targets: ['127.0.0.1:7090']
+        labels:
+          app: 'user-rpc'
+          env: 'test'
+          instance: "127.0.0.1:9000"
+
+      - targets: ['127.0.0.1:7081']
+        labels:
+          app: 'product-api'
+          env: 'test'
+          instance: "127.0.0.1:8001"
+
+      - targets: ['127.0.0.1:7091']
+        labels:
+          app: 'product-rpc'
+          env: 'test'
+          instance: "127.0.0.1:9001"
+
+      - targets: ['127.0.0.1:7082']
+        labels:
+          app: 'order-api'
+          env: 'test'
+          instance: "127.0.0.1:8002"
+
+      - targets: ['127.0.0.1:7092']
+        labels:
+          app: 'order-rpc'
+          env: 'test'
+          instance: "127.0.0.1:9002"
+
+      - targets: ['127.0.0.1:7083']
+        labels:
+          app: 'pay-api'
+          env: 'test'
+          instance: "127.0.0.1:8003"
+
+      - targets: ['127.0.0.1:7093']
+        labels:
+          app: 'pay-rpc'
+          env: 'test'
+          instance: "127.0.0.1:9003"

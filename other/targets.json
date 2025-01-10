@@ -1,0 +1,11 @@
+  [
+      {
+          "targets": ["127.0.0.1:6060"],
+          "labels": {
+              "job": "user-api",
+              "app": "user-api",
+              "env": "test",
+              "instance": "127.0.0.1:8888"
+          }
+      }
+  ]
